@@ -93,7 +93,7 @@ Organised by [Diataxis](https://diataxis.fr/), starting at the [docs index](docs
 | Look up a rule, source or type | [Concepts and API reference](docs/reference/concepts.md), [Fable target differences](docs/reference/fable-targets.md) |
 | Understand why it works this way | [Design decisions](docs/explanation/design-decisions.md) |
 
-More: [changelog](CHANGELOG.md) · [examples](examples/README.md)
+More: [changelog](CHANGELOG.md) · [examples](examples/README.md) · [contributing](CONTRIBUTING.md)
 
 ## License
 

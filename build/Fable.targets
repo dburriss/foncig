@@ -10,7 +10,7 @@
     exist inside a package.
 
     The generated file must not sit in a folder called fable: Fable then mistakes the project reference for a packed
-    Fable package and fails to compile it (see docs/reference/fable-targets.md). It is written to obj/<config>/pack-fable-project/.
+    Fable package and fails to compile it (see CONTRIBUTING.md). It is written to obj/<config>/pack-fable-project/.
   -->
   <ItemGroup>
     <Content Include="@(Compile)" Pack="true" PackagePath="fable/" />

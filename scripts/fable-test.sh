@@ -3,7 +3,7 @@
 #
 #   scripts/fable-test.sh [js|python|all]      (default: all)
 #
-# Prerequisites (see docs/reference/fable-targets.md): .NET SDK 8+, `bun` or `node` for the JS run (any JS runtime
+# Prerequisites (see CONTRIBUTING.md): .NET SDK 8+, `bun` or `node` for the JS run (any JS runtime
 # that runs ES modules), Python 3.12+ for the Python run (3.13 tested). The Fable tool itself is
 # pinned in .config/dotnet-tools.json and restored here; the Python run creates
 # tests/Foncig.Fable/.venv and installs `fable-library` at the same version.

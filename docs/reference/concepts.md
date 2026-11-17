@@ -89,11 +89,3 @@ Nothing throws across the public API. `ConfigError.describe` renders text with s
 | `UnknownSwitch(token, index)` | Unmapped single-dash switch |
 | `UnknownFormat` | No format for the file extension |
 | `Aggregate` | Several errors together |
-
-## Build and test
-
-```bash
-dotnet test Foncig.slnx
-scripts/fable-test.sh js
-scripts/fable-test.sh python
-```
