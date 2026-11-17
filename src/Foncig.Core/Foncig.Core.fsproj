@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Foncig.Core</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable configuration config layered fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <Description>Layered configuration for F#: flat colon-separated keys, last source wins, provenance and explain, list merge policies, env vars and CLI args, typed access and an applicative decoder. Pure and Fable-safe: runs on .NET, Fable JavaScript and Fable Python.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Types.fs" />
+    <Compile Include="Key.fs" />
+    <Compile Include="Scalar.fs" />
+    <Compile Include="Flatten.fs" />
+    <Compile Include="Env.fs" />
+    <Compile Include="Args.fs" />
+    <Compile Include="Encode.fs" />
+    <Compile Include="Source.fs" />
+    <Compile Include="Merge.fs" />
+    <Compile Include="Config.fs" />
+    <Compile Include="Builder.fs" />
+    <Compile Include="Decode.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fnode.Core" Version="$(FnodeVersion)" />
+    <FablePackageReference Include="Fnode.Core" Version="$(FnodeVersion)" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>
