@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Foncig.Json</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable configuration json fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <Description>JSON file source for Foncig, built on Fnode.Json. Runs on .NET, Fable JavaScript and Fable Python.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="JsonSource.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Foncig.Core/Foncig.Core.fsproj" />
+    <PackageReference Include="Fnode.Json" Version="$(FnodeVersion)" />
+    <FablePackageReference Include="Foncig.Core" Version="$(Version)" />
+    <FablePackageReference Include="Fnode.Json" Version="$(FnodeVersion)" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>

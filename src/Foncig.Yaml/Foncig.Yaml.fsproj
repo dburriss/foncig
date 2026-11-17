@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Foncig.Yaml</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable configuration yaml fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <Description>YAML file source for Foncig, built on Fnode.Yaml. Runs on .NET, Fable JavaScript and Fable Python.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="YamlSource.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Foncig.Core/Foncig.Core.fsproj" />
+    <PackageReference Include="Fnode.Yaml" Version="$(FnodeVersion)" />
+    <FablePackageReference Include="Foncig.Core" Version="$(Version)" />
+    <FablePackageReference Include="Fnode.Yaml" Version="$(FnodeVersion)" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>
