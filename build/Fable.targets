@@ -1,0 +1,43 @@
+<Project>
+
+  <!--
+    Fable compiles a NuGet package from its F# sources, so each package ships its .fs files and a project file
+    under fable/ (next to the lib/ DLLs). A consumer then needs only a plain PackageReference.
+
+    The project file in fable/ is generated here from the Compile list. Dependencies are declared in the real
+    project as <FablePackageReference Include="Id" Version="x" /> items (next to the ProjectReference/PackageReference
+    that .NET uses); the generated file turns each into a PackageReference, because a ProjectReference does not
+    exist inside a package.
+
+    The generated file must not sit in a folder called fable: Fable then mistakes the project reference for a packed
+    Fable package and fails to compile it (see docs/reference/fable-targets.md). It is written to obj/<config>/pack-fable-project/.
+  -->
+  <ItemGroup>
+    <Content Include="@(Compile)" Pack="true" PackagePath="fable/" />
+  </ItemGroup>
+
+  <Target Name="GenerateFableProject" BeforeTargets="_GetPackageFiles">
+    <PropertyGroup>
+      <FableProjectFile>$(MSBuildProjectDirectory)/$(IntermediateOutputPath)pack-fable-project/$(MSBuildProjectName).fsproj</FableProjectFile>
+      <FableFrameworks>$(TargetFrameworks.Replace(';', '%3B'))</FableFrameworks>
+    </PropertyGroup>
+    <ItemGroup>
+      <FableLine Include="&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;" />
+      <FableLine Include="  &lt;PropertyGroup&gt;" />
+      <FableLine Include="    &lt;TargetFrameworks&gt;$(FableFrameworks)&lt;/TargetFrameworks&gt;" />
+      <FableLine Include="  &lt;/PropertyGroup&gt;" />
+      <FableLine Include="  &lt;ItemGroup&gt;" />
+      <FableLine Include="@(Compile->'    &lt;Compile Include=&quot;%(Identity)&quot; /&gt;')" />
+      <FableLine Include="  &lt;/ItemGroup&gt;" />
+      <FableLine Condition="'@(FablePackageReference)' != ''" Include="  &lt;ItemGroup&gt;" />
+      <FableLine Condition="'@(FablePackageReference)' != ''" Include="@(FablePackageReference->'    &lt;PackageReference Include=&quot;%(Identity)&quot; Version=&quot;%(Version)&quot; /&gt;')" />
+      <FableLine Condition="'@(FablePackageReference)' != ''" Include="  &lt;/ItemGroup&gt;" />
+      <FableLine Include="&lt;/Project&gt;" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(FableProjectFile)" Lines="@(FableLine)" Overwrite="true" />
+    <ItemGroup>
+      <Content Include="$(FableProjectFile)" Pack="true" PackagePath="fable/" />
+    </ItemGroup>
+  </Target>
+
+</Project>

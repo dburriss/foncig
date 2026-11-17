@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);FS3370;NU1701</NoWarn>
+  </PropertyGroup>
+
+  <!-- Compiled by Fable (`scripts/fable-test.sh`), not by `dotnet test` (not in the .slnx): the .NET suites live in
+       ../Foncig.Core.Tests and ../Foncig.Host.Tests and these are the very same files, run through tiny xUnit
+       and FsCheck shims. Runner.generated.fs is written by scripts/fable-gen-runner.fsx. Keep the Compile list in sync
+       with those projects (the generator reads it). -->
+  <ItemGroup>
+    <Compile Include="XunitShim.fs" />
+    <Compile Include="FsCheckShim.fs" />
+    <Compile Include="../Foncig.Core.Tests/KeyTests.fs" Link="Foncig.Core.Tests/KeyTests.fs" />
+    <Compile Include="../Foncig.Core.Tests/ScalarTests.fs" Link="Foncig.Core.Tests/ScalarTests.fs" />
+    <Compile Include="../Foncig.Core.Tests/FlattenTests.fs" Link="Foncig.Core.Tests/FlattenTests.fs" />
+    <Compile Include="../Foncig.Core.Tests/MergeTests.fs" Link="Foncig.Core.Tests/MergeTests.fs" />
+    <Compile Include="../Foncig.Core.Tests/EnvArgsTests.fs" Link="Foncig.Core.Tests/EnvArgsTests.fs" />
+    <Compile Include="../Foncig.Core.Tests/ConfigTests.fs" Link="Foncig.Core.Tests/ConfigTests.fs" />
+    <Compile Include="../Foncig.Host.Tests/Platform.fs" Link="Foncig.Host.Tests/Platform.fs" />
+    <Compile Include="../Foncig.Host.Tests/HostTests.fs" Link="Foncig.Host.Tests/HostTests.fs" />
+    <Compile Include="Runner.generated.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Foncig.Defaults/Foncig.Defaults.fsproj" />
+    <PackageReference Include="Fable.Core" Version="5.6.1" />
+  </ItemGroup>
+
+</Project>
