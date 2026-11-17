@@ -1,0 +1,8 @@
+# Base configuration (lowest layer after code defaults)
+Db:
+  Host: localhost
+  Port: 5432
+  Timeout: "00:00:30"
+Tags: [web, api]
+Debug: false
+Version: 1.10

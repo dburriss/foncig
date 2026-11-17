@@ -1,0 +1,4 @@
+# Used when FNEX_ENVIRONMENT=Production
+Db:
+  Host: db.prod.internal
+Tags: [prod]
