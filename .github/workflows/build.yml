@@ -27,7 +27,10 @@ jobs:
       - name: Format check
         run: |
           dotnet tool restore
-          dotnet fantomas --check src tests/Foncig.Core.Tests tests/Foncig.Host.Tests examples/shared
+          # Fantomas 7.0.5 crashes when given several paths at once, so check each separately
+          for p in src tests/Foncig.Core.Tests tests/Foncig.Host.Tests examples/shared; do
+            dotnet fantomas --check "$p"
+          done
 
       - name: Build
         run: dotnet build Foncig.slnx --configuration Release --no-restore
