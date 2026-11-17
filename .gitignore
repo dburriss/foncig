@@ -55,3 +55,14 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Fable
+fable_modules/
+out-js/
+out-python/
+.venv/
+__pycache__/
+node_modules/
+*.pyc
+*.generated.fs
+artifacts/

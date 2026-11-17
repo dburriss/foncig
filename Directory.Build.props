@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
+    <Version>0.1.0</Version>
+    <!-- The Fnode packages this library builds on (Fnode.Core / Fnode.Json / Fnode.Yaml move in lockstep). -->
+    <FnodeVersion>0.2.0</FnodeVersion>
+    <PackageReleaseNotes>First release: layered configuration (JSON, YAML, env, CLI) with provenance and list-merge policies.</PackageReleaseNotes>
+    <Authors>Devon Burriss</Authors>
+    <Copyright>Copyright © 2026 Devon Burriss</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dburriss/foncig</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dburriss/foncig</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <OtherFlags>$(OtherFlags) --nowarn:57</OtherFlags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  <!-- Explicit FSharp.Core floor for packed projects (same as Fnode 0.2.0), so it does not follow the CI SDK. -->
+  <PropertyGroup Condition="!$(MSBuildProjectName.EndsWith('Tests')) And !$(MSBuildProjectName.EndsWith('Fable'))">
+    <FSharpCoreImplicitPackageVersion>8.0.403</FSharpCoreImplicitPackageVersion>
+  </PropertyGroup>
+</Project>
