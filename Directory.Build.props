@@ -1,11 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
     <!-- The package version. scripts/publish.fsx rewrites Version and PackageReleaseNotes here. -->
     <Version>0.1.0</Version>
     <!-- The Fnode packages this library builds on (Fnode.Core / Fnode.Json / Fnode.Yaml move in lockstep). -->
     <FnodeVersion>0.2.0</FnodeVersion>
-    <PackageReleaseNotes>First release: layered configuration (JSON, YAML, env, CLI) with provenance and list-merge policies.</PackageReleaseNotes>
+    <PackageReleaseNotes>`Foncig.Core`: layered configuration with flat, case-insensitive, colon-separated keys; last source wins.
+Flattening of `Node` trees with deterministic, culture-free scalar text (identical on .NET, Fable JS and Fable Python),
+Provenance on every entry (`source`, `file:line:col`, env var name or CLI token) and `Config.explain` with the full
+List merge policies `Replace` (default), `MergeByIndex` (the .NET behaviour) and `Append`, global or per key prefix.
+Environment variable source (prefix filter, `__` as `:`) and command-line source (`--k v`, `--k=v`, `--k:sub v`,
+Typed access (`int`, `int64`, `float`, `bool`, `Guid`, `Uri`, `TimeSpan`, `DateTimeOffset`, lists, maps), section
+Reflection-free record sources through explicit encoders (`Encode`, `ConfigSource.ofRecord`).
+`Foncig.Host` (environment, arguments, file reading, home and working directory, path helpers, upward search),
+Packages ship their F# sources under `fable/` for Fable JavaScript and Python consumers.</PackageReleaseNotes>
     <Authors>Devon Burriss</Authors>
     <Copyright>Copyright © 2026 Devon Burriss</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
