@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+  </PropertyGroup>
+
+  <!-- Small per-target tests against a real temp directory and real environment variables.
+       Keep in sync with ../Foncig.Fable/Foncig.Fable.fsproj. -->
+  <ItemGroup>
+    <Compile Include="Platform.fs" />
+    <Compile Include="HostTests.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
+    <PackageReference Include="FsCheck.Xunit.v3" Version="3.6.0" />
+    <PackageReference Include="Fable.Core" Version="5.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Foncig.Defaults/Foncig.Defaults.fsproj" />
+  </ItemGroup>
+
+</Project>

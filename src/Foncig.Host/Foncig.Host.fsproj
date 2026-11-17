@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Foncig.Host</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable configuration host environment fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <Description>Platform shims for Foncig: environment variables, command-line arguments, file reading, home and working directory on .NET, Fable JavaScript (Node, Bun, Deno) and Fable Python, plus file sources chosen by extension.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Host.fs" />
+    <Compile Include="FileSources.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Foncig.Core/Foncig.Core.fsproj" />
+    <PackageReference Include="Fable.Core" Version="5.6.1" />
+    <FablePackageReference Include="Foncig.Core" Version="$(Version)" />
+    <FablePackageReference Include="Fable.Core" Version="5.6.1" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>
