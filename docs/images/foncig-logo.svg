@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="360" height="120" role="img" aria-labelledby="t">
+  <title id="t">foncig</title>
+  <rect x="4" y="4" width="352" height="112" rx="22" fill="#14151c"/>
+  <!-- mark: three stacked configuration layers, the topmost wins -->
+  <g fill="#6fd6a8">
+    <rect x="22" y="76" width="64" height="18" rx="4" opacity="0.35"/>
+    <rect x="30" y="54" width="64" height="18" rx="4" opacity="0.65"/>
+    <rect x="38" y="32" width="64" height="18" rx="4"/>
+  </g>
+  <!-- wordmark -->
+  <text x="124" y="82" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="52" font-weight="700" fill="#f2f2f2">foncig</text>
+</svg>
