@@ -1,0 +1,67 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet:
+    name: .NET
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore Foncig.slnx
+
+      - name: Format check
+        run: |
+          dotnet tool restore
+          dotnet fantomas --check src tests/Foncig.Core.Tests tests/Foncig.Host.Tests examples/shared
+
+      - name: Build
+        run: dotnet build Foncig.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Foncig.slnx --configuration Release --no-build --verbosity normal
+
+  fable:
+    name: Fable ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ js, python ]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Node
+        if: matrix.target == 'js'
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        if: matrix.target == 'python'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      # Runs the same test files as the .NET job, compiled by Fable. Exits non-zero if any test fails.
+      - name: Fable tests
+        run: scripts/fable-test.sh ${{ matrix.target }}

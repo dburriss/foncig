@@ -1,0 +1,78 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'    # e.g., v0.1.0 or v0.1.0-alpha.1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required to request the OIDC token for Trusted Publishing
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+      - name: Determine version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # The tag is the version of record; Directory.Build.props must say the same, so a tag cannot ship a
+      # different version than the one the release script committed.
+      - name: Check tag matches Directory.Build.props
+        if: github.ref_type == 'tag'
+        run: |
+          props=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Directory.Build.props | head -n 1)
+          if [ "$props" != "${{ steps.version.outputs.version }}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match <Version>$props</Version> in Directory.Build.props"
+            exit 1
+          fi
+
+      # One tag releases every package in lockstep: scripts/pack.sh holds the list and fails if any package is
+      # missing. The tag version overrides <Version>, and the Foncig* dependencies between packages get the same version.
+      - name: Pack
+        run: scripts/pack.sh "${{ steps.version.outputs.version }}" ./artifacts
+
+      # Exchanges the job's OIDC token for a short-lived (1 hour) nuget.org API key.
+      # Requires a Trusted Publishing policy on nuget.org for this repo + this workflow file name.
+      - name: NuGet login (OIDC to temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }} # nuget.org username (profile name), NOT your email address
+
+      - name: Publish to nuget.org
+        run: |
+          shopt -s nullglob
+          packages=(./artifacts/*.nupkg)
+          if [ ${#packages[@]} -eq 0 ]; then
+            echo "::error::No packages in ./artifacts"
+            exit 1
+          fi
+          # The glob sorts alphabetically, so Foncig is pushed before the packages that depend on it.
+          for package in "${packages[@]}"; do
+            echo "Pushing $package"
+            dotnet nuget push "$package" \
+              --source https://api.nuget.org/v3/index.json \
+              --api-key ${{ steps.login.outputs.NUGET_API_KEY }} \
+              --skip-duplicate
+          done
