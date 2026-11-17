@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Foncig.Core/Foncig.Core.fsproj" />
+    <Project Path="src/Foncig.Host/Foncig.Host.fsproj" />
+    <Project Path="src/Foncig.Json/Foncig.Json.fsproj" />
+    <Project Path="src/Foncig.Yaml/Foncig.Yaml.fsproj" />
+    <Project Path="src/Foncig.Defaults/Foncig.Defaults.fsproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Foncig.Core.Tests/Foncig.Core.Tests.fsproj" />
+    <Project Path="tests/Foncig.Host.Tests/Foncig.Host.Tests.fsproj" />
+  </Folder>
+</Solution>

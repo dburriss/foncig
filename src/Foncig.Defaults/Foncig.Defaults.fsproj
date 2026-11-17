@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Foncig.Defaults</PackageId>
+    <IsPackable>true</IsPackable>
+    <PackageTags>fsharp fable configuration defaults fnode</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <Description>One-call conventional layers for Foncig: appsettings.json/yaml, environment-specific file, user file, environment variables and command-line arguments. Runs on .NET, Fable JavaScript and Fable Python.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Defaults.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Foncig.Core/Foncig.Core.fsproj" />
+    <ProjectReference Include="../Foncig.Host/Foncig.Host.fsproj" />
+    <ProjectReference Include="../Foncig.Json/Foncig.Json.fsproj" />
+    <ProjectReference Include="../Foncig.Yaml/Foncig.Yaml.fsproj" />
+    <FablePackageReference Include="Foncig.Core" Version="$(Version)" />
+    <FablePackageReference Include="Foncig.Host" Version="$(Version)" />
+    <FablePackageReference Include="Foncig.Json" Version="$(Version)" />
+    <FablePackageReference Include="Foncig.Yaml" Version="$(Version)" />
+  </ItemGroup>
+  <Import Project="../../build/Fable.targets" />
+</Project>
