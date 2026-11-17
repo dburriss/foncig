@@ -73,8 +73,16 @@ nuget.org or GitHub from a developer machine.
 
 - `scripts/publish.fsx` is the interactive release script: it runs a preflight build and test, asks for the next
   version, updates `Directory.Build.props` and moves `Unreleased` in [CHANGELOG.md](CHANGELOG.md) into a release, then
-  commits and tags, and optionally pushes. The header of the script lists its arguments (`--fsproj`, `--solution`,
-  `--dry-run`, ...).
+  commits and tags, and optionally pushes. Pushing the `v*` tag is what publishes. Run it from the repo root:
+
+  ```bash
+  ./scripts/publish.fsx --fsproj Directory.Build.props --solution Foncig.slnx --dry-run   # rehearse
+  ./scripts/publish.fsx --fsproj Directory.Build.props --solution Foncig.slnx
+  ```
+
+  The script header lists the other arguments (`--allow-dirty`, `--require-clean`).
+- One-time setup: a Trusted Publishing policy on nuget.org for this repo and `publish-nuget.yml`, and a `NUGET_USER`
+  repository secret holding the nuget.org username (not the email).
 - `scripts/pack.sh <version> [output-dir]` packs every package at one version. Its `PACKAGES` list is the list of
   packages in a release; a package must also be in `Foncig.slnx`.
 - Record user-visible changes under `Unreleased` in the changelog ([Keep a Changelog](https://keepachangelog.com/en/1.1.0/)).
